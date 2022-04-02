@@ -4,7 +4,16 @@ const {
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
+const {
+    Op
+} = require("sequelize")
+
 const router = Router();
+
+const {
+    Genre,
+    Videogame
+} = require("../db")
 
 const {
     getAllVideogames
@@ -49,6 +58,28 @@ router.get("/", async (req, res) => {
                     genres: data.genres.map(data => data.name)
                 }
             })
+
+            const videogameDb = await Videogame.findAll({ //se busca todas las coincidencias en la DB donde coincida su nombre con lo que me pasan por body
+
+                where: {
+                    name: {
+                        [Op.iLike]: "%" + name + "%"
+                    },
+                },
+                include: Genre
+            })
+
+            console.log(Genre)
+
+            /* videogameDb.forEach((game) => {
+                game.Genres = game.genres.map(p => p.name);
+            }); */
+
+            /* videogameDb.forEach(data => data.genres = data.genres.map(p => p.name)) */
+
+            /* console.log(videogameDb[0]) */
+
+            videogameName = videogameName.concat(videogameDb)
 
             if (videogameName.length) {
                 res.status(200).send(videogameName)

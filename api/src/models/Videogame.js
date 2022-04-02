@@ -27,8 +27,15 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL
     },
     platforms: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false
+    },
+    createInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
+  }, {
+    timestamps: false
   });
 };

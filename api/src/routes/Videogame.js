@@ -20,7 +20,7 @@ const {
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get("/videogame/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
 
 
     try {
@@ -55,13 +55,13 @@ router.get("/videogame/:id", async (req, res) => {
             let gameApi = await axios.get(`https://api.rawg.io/api/games/${id}?key=${DB_KEY}`);
 
             let gameFromApi = {
-                id: gameApi.id,
-                name: gameApi.name,
-                description: gameApi.description,
-                released: gameApi.released,
-                rating: gameApi.rating,
-                platforms: gameApi.platforms,
-                genres: gameApi.genres
+                id: gameApi.data.id,
+                name: gameApi.data.name,
+                description: gameApi.data.description,
+                released: gameApi.data.released,
+                rating: gameApi.data.rating,
+                platforms: gameApi.data.platforms.map(data => data.platform.name),
+                genres: gameApi.data.genres.map(data => data.name)
             }
 
             res.send(gameFromApi);
@@ -72,6 +72,45 @@ router.get("/videogame/:id", async (req, res) => {
     }
 
 
+})
+
+router.post("/", async (req, res) => {
+
+    try {
+        let {
+            id,
+            name,
+            description,
+            released,
+            rating,
+            platforms,
+            createInDb,
+            genres
+        } = req.body //se busca la info que necesitaremos para crear en el body
+
+        let videogameCreated = await Videogame.create({ //aca creamos el videojuego con lo que nos pasaron por body
+            id,
+            name,
+            description,
+            released,
+            rating,
+            platforms,
+            createInDb,
+        })
+
+        let genresDb = await Genre.findAll({ //se busca todas las coincidencias en la DB donde coincida su nombre con lo que me pasan por body
+            where: {
+                name: genres
+            }
+        })
+
+        videogameCreated.addGenres(genresDb) //aca le anexamos el genero de la base de datos al videojuego creado
+
+        res.send("Videojuego creado con exito")
+
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
