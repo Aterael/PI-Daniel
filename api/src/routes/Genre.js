@@ -12,7 +12,7 @@ const router = Router();
 
 const {
     getAllVideogames
-} = require("../../Controllers/VideogamesController");
+} = require("../Controllers/VideogamesController");
 
 const axios = require('axios');
 
@@ -28,9 +28,9 @@ router.get("/", async (req, res) => {
 
         let genresApi = await axios.get(`https://api.rawg.io/api/genres?key=${DB_KEY}`)
 
-        genresApi.data.results.forEach(async data => { //aca se guarda en la base de datos, lo crea si no existe o lo trae
+        genresApi.data.results.forEach(data => { //aca se guarda en la base de datos, lo crea si no existe o lo trae
             try {
-                await Genre.findOrCreate({
+                Genre.findOrCreate({
                     where: {
                         name: data.name
                     }

@@ -1,0 +1,103 @@
+const axios = require("axios");
+
+const {
+    Genre,
+    Videogame
+} = require("../db")
+
+const getApiInfo = async function () {
+
+    try {
+        const {
+            DB_KEY
+        } = process.env;
+
+        let pageOne = axios.get(`https://api.rawg.io/api/games?key=${DB_KEY}`);
+        let pageTwo = axios.get(`https://api.rawg.io/api/games?key=${DB_KEY}&page=2`);
+        let pageThree = axios.get(`https://api.rawg.io/api/games?key=${DB_KEY}&page=3`);
+        let pageFour = axios.get(`https://api.rawg.io/api/games?key=${DB_KEY}&page=4`);
+        let pageFive = axios.get(`https://api.rawg.io/api/games?key=${DB_KEY}&page=5`);
+
+
+        let fullApiUrl = []; //creo una variable donde voy a guardar las 5 paginas del pedido a la api para reducir el tiempo
+
+        await Promise.all([pageOne, pageTwo, pageThree, pageFour, pageFive]).then((response) => { //aca hago un Promise.all para enviar los 5 pedidos en simultaneo y seteo la variable con la info que me traiga
+            response.forEach((promise) => {
+                fullApiUrl = [...fullApiUrl, ...promise.data.results]
+            })
+        });
+
+        let apiInfo = fullApiUrl.map(data => {
+            return {
+                id: data.id,
+                name: data.name,
+                description: data.description,
+                released: data.released,
+                rating: data.rating,
+                image: data.background_image,
+                platforms: data.platforms.map(data => data.platform.name),
+                genres: data.genres.map(data => data.name)
+            }
+        })
+
+        return apiInfo
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}
+
+const getDbInfo = async function () { //busca en la base de datos cualquier info que incluya el modelo genero y su atributo name y que sea un array
+
+    try {
+        let gameDb = await Videogame.findAll({
+            include: {
+                model: Genre,
+                attributes: ["name"],
+                through: {
+                    attributes: []
+                }
+            }
+        })
+
+        gameDb = gameDb.map(({
+            id,
+            name,
+            released,
+            rating,
+            platforms,
+            genres,
+            image
+        }) => ({
+            id,
+            name,
+            released,
+            rating,
+            platforms,
+            image,
+            genres: genres.map((genre) => genre.name),
+        }));
+
+        return gameDb
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+const getAllVideogames = async function () {
+    try {
+        let apiInfo = await getApiInfo();
+        let dbInfo = await getDbInfo();
+        let infoTotal = dbInfo.concat(apiInfo);
+        return infoTotal;
+    } catch (error) {
+        console - log(error)
+    }
+}
+
+module.exports = {
+    getAllVideogames
+}

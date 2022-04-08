@@ -17,7 +17,7 @@ const {
 
 const {
     getAllVideogames
-} = require("../../Controllers/VideogamesController");
+} = require("../Controllers/VideogamesController");
 
 
 const axios = require('axios');
@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
 
         if (name) {
 
-            let videogameName = await videogameAllName.data.results.filter(data => data.name.toLowerCase().includes(name.toLowerCase()))
+            let videogameName = videogameAllName.data.results.filter(data => data.name.toLowerCase().includes(name.toLowerCase()))
 
             videogameName = videogameName.slice(0, 15);
 
@@ -54,13 +54,13 @@ router.get("/", async (req, res) => {
                     description: data.description,
                     released: data.released,
                     rating: data.rating,
-                    platforms: data.platforms.map(data => data.platform.name),
-                    genres: data.genres.map(data => data.name)
+                    image: data.background_image,
+                    platforms: data.platforms?.map(data => data.platform.name),
+                    genres: data.genres?.map(data => data.name)
                 }
-            })
+            });
 
-            const videogameDb = await Videogame.findAll({ //se busca todas las coincidencias en la DB donde coincida su nombre con lo que me pasan por body
-
+            let videogameDb = await Videogame.findAll({ //se busca todas las coincidencias en la DB donde coincida su nombre con lo que me pasan por body
                 where: {
                     name: {
                         [Op.iLike]: "%" + name + "%"
@@ -69,17 +69,25 @@ router.get("/", async (req, res) => {
                 include: Genre
             })
 
-            console.log(Genre)
+            videogameDb = videogameDb.map(({
+                id,
+                name,
+                released,
+                rating,
+                platforms,
+                genres,
+                image
+            }) => ({
+                id,
+                name,
+                released,
+                rating,
+                platforms,
+                genres: genres.map((genre) => genre.name),
+                image
+            }));
 
-            /* videogameDb.forEach((game) => {
-                game.Genres = game.genres.map(p => p.name);
-            }); */
-
-            /* videogameDb.forEach(data => data.genres = data.genres.map(p => p.name)) */
-
-            /* console.log(videogameDb[0]) */
-
-            videogameName = videogameName.concat(videogameDb)
+            videogameName = videogameDb.concat(videogameName)
 
             if (videogameName.length) {
                 res.status(200).send(videogameName)
@@ -97,7 +105,7 @@ router.get("/", async (req, res) => {
         console.log(error)
     }
 
-})
+});
 
 
 module.exports = router;

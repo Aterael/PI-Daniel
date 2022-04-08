@@ -30,10 +30,14 @@ module.exports = (sequelize) => {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false
     },
-    createInDb: {
+    createdInDb: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     timestamps: false

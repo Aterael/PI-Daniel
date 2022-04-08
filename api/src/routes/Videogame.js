@@ -15,7 +15,7 @@ const axios = require('axios');
 
 const {
     getAllVideogames
-} = require("../../Controllers/VideogamesController");
+} = require("../Controllers/VideogamesController");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -47,8 +47,10 @@ router.get("/:id", async (req, res) => {
                 released: videogameDb.released,
                 rating: videogameDb.rating,
                 platforms: videogameDb.platforms,
-                genres: videogameDb.genres
+                image: videogameDb.image,
+                genres: videogameDb.genres?.map((genre) => genre.name)
             }
+
             res.send(game)
         } else {
 
@@ -60,8 +62,9 @@ router.get("/:id", async (req, res) => {
                 description: gameApi.data.description,
                 released: gameApi.data.released,
                 rating: gameApi.data.rating,
-                platforms: gameApi.data.platforms.map(data => data.platform.name),
-                genres: gameApi.data.genres.map(data => data.name)
+                image: gameApi.data.background_image,
+                platforms: gameApi.data.platforms?.map(data => data.platform.name),
+                genres: gameApi.data.genres?.map(data => data.name)
             }
 
             res.send(gameFromApi);
@@ -84,8 +87,9 @@ router.post("/", async (req, res) => {
             released,
             rating,
             platforms,
-            createInDb,
-            genres
+            createdInDb,
+            genres,
+            image
         } = req.body //se busca la info que necesitaremos para crear en el body
 
         let videogameCreated = await Videogame.create({ //aca creamos el videojuego con lo que nos pasaron por body
@@ -95,7 +99,8 @@ router.post("/", async (req, res) => {
             released,
             rating,
             platforms,
-            createInDb,
+            createdInDb,
+            image
         })
 
         let genresDb = await Genre.findAll({ //se busca todas las coincidencias en la DB donde coincida su nombre con lo que me pasan por body
