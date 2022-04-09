@@ -1,12 +1,13 @@
 import React from "react";
+import "./Card.css"
 
 export default function Card({name, image, genres, rating}){
     return (
-        <div>
+        <div className="container_videogame">
             <h3>{name}</h3>
             <h5>{genres}</h5>
             <h5>{rating}</h5>
-            <img src={image} alt="img not found" width="250px" height="200px" />
+            <img className="img_videogame" src={image} alt="img not found"/>
         </div>
     )
 }

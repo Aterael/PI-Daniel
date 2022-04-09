@@ -15,11 +15,7 @@ export default function Detail(){
 
     const myVideogame = useSelector(state => state.detail);
 
-    /* let platforms = myVideogame.platforms
-
-    let hola = platforms.split(", ").join(", ")
-
-    console.log(hola) */
+    console.log(myVideogame)
 
     if (myVideogame) {
         return (
@@ -28,12 +24,12 @@ export default function Detail(){
             <h1>{myVideogame.name}</h1>
                 <img src={myVideogame.image} alt="Imagen no encontrada"/>
                 <h2>Rating: {myVideogame.rating}</h2>
-                <p>{myVideogame.description}</p>
+                <p dangerouslySetInnerHTML={{__html: myVideogame.description}}></p>
                 <h4>Fecha de lanzamiento: {myVideogame.released}</h4>
-                <h4>Plataformas: {myVideogame.platforms}</h4>
-                <h4>Generos: {myVideogame.genres}</h4>
+                <h4>Plataformas: {myVideogame.platforms}</h4> {/* COMO SEPARARLOS */}
+                <h4>Géneros: {myVideogame.genres}</h4>  {/* COMO SEPARARLOS */}
               <Link to="/home">
-                <button>Go back</button>
+                <button>Volver</button>
               </Link>
             </div>
           </div>
@@ -41,29 +37,12 @@ export default function Detail(){
       } else {
         return (
           <div>
-            Loading...
+            Cargando...
             <Link to="/home">
-              <button>Go back</button>
+              <button>Volver</button>
             </Link>
           </div>
         );
       }
-
-    /* (
-        <div>
-            {myVideogame.length > 0 ?
-            <div>
-                <h1>{myVideogame[0].name}</h1>
-                <img src={myVideogame[0].image} alt="Imagen no encontrada"/>
-                <h2>Rating: {myVideogame[0].rating}</h2>
-                <p>{myVideogame[0].description}</p>
-                <h4>Fecha de lanzamiento: {myVideogame[0].released}</h4>
-                <h4>Plataformas: {myVideogame[0].platforms.map(data => data + (" "))}</h4>
-                <h4>Generos: {myVideogame[0].genres.map(data => data + (" "))}</h4>
-            </div> : 
-            <p>Loading...</p>}
-            <Link to="/home">Volver</Link>
-        </div>
-    ) */
 
 }

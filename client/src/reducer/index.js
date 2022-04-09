@@ -50,10 +50,6 @@ function rootReducer(state = initialState, action) {
                             }
                             return 0
                         })
-                        if (action.payload === "All") {
-                            let allFiltered = state.allVideogames;
-                            sortedArr = allFiltered
-                        }
                     return {
                         ...state,
                         videogames: sortedArr
@@ -76,12 +72,17 @@ function rootReducer(state = initialState, action) {
                                     let filterGenre = state.allVideogames.filter(p => {
                                         if(p.genres?.includes(action.payload)) return p
                                     })
+                                    if(action.payload === "All"){
+                                        filterGenre = state.allVideogames
+                                    }
                                     return {
                                         ...state,
                                         videogames: filterGenre
                                     }
                                     case "ORDER_BY_RATING":
-                                        let sortedArrRating = action.payload === "peor" ? state.videogames.sort(function (a, b) { //si es ascendente
+                                        let sortedArrRating;
+                                        if(action.payload === "peor"){
+                                            sortedArrRating = state.videogames.sort(function (a, b) { //si es ascendente
                                                 if (a.rating > b.rating) { // accede al estado videogames y le hace un sort
                                                     return 1; // los ordena de manera ascendente
                                                 }
@@ -89,8 +90,9 @@ function rootReducer(state = initialState, action) {
                                                     return -1;
                                                 }
                                                 return 0
-                                            }) :
-                                            state.videogames.sort(function (a, b) {
+                                            })
+                                        } else if (action.payload === "mejor"){
+                                            sortedArrRating = state.videogames.sort(function (a, b) {
                                                 if (a.rating > b.rating) {
                                                     return -1
                                                 }
@@ -99,6 +101,7 @@ function rootReducer(state = initialState, action) {
                                                 }
                                                 return 0
                                             })
+                                        }
                                         return {
                                             ...state,
                                             videogames: sortedArrRating

@@ -6,15 +6,25 @@ import { useDispatch, useSelector } from "react-redux";
 function validate(input){  //usado para validad errores 
     let errors = {};
     if (!input.name){
-        errors.name = "Se requiere un nombre";
-    } else if (!input.description){
-        errors.description = "Se requiere una descripcion";
-    } else if (!input.released){
+        errors.name = "Se requiere un nombre"
+    }
+     if (!input.description){
+        errors.description = "Se requiere una descripción";
+    }
+    if (!input.released){
         errors.released = "Se requiere una fecha de lanzamiento";
-    } else if (!input.rating){
-        errors.rating = "Se requiere una puntuacion de Rating";
-    } else if (!input.image){
+    } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(input.released) === false){
+        errors.released = "Formato de fecha debe ser DD/MM/AAAA"
+    }
+    if (!input.rating){
+        errors.rating = "Se requiere una puntuación de Rating";
+    } else if (/^[+-]?\d+([,.]\d+)?$/.test(input.rating) === false){
+        errors.rating = "Formato de Rating debe ser 1.2 por ejemplo"
+    }
+    if (!input.image){
         errors.image = "Se requiere una imagen";
+    } else if (/^https:/.test(input.image) === false){
+        errors.image = "URL de imagen inválido"
     }
 
     return errors;
@@ -122,17 +132,22 @@ export default function VideogameCreated(){
     
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(postVideogame(input));
-        alert("Videojuego creado con exito!");
-        setInput({
-            name: "",
-	    description: "",
-	    released:"",
-        rating:"",
-        platforms: [],
-        genres:[],
-	    image: "" 
-        });
+        if(!input.name || !input.description || !input.released || !input.released.includes("/") || !input.rating || input.rating > 5 || input.rating <= 0 || !input.rating.includes(".") || input.platforms.length < 1 || input.genres.length < 1 || !input.image || !input.image.includes("https")){
+            e.preventDefault();
+            alert("Falta una propiedad para crear tu Videojuego!")
+        } else {
+            dispatch(postVideogame(input));
+            alert("Videojuego creado con éxito!");
+            setInput({
+                name: "",
+            description: "",
+            released:"",
+            rating:"",
+            platforms: [],
+            genres:[],
+            image: "" 
+            });
+        }
     }
 
     function handleDeletePlatforms(e){
@@ -163,18 +178,20 @@ export default function VideogameCreated(){
                     value={input.name}
                     name="name"
                     onChange={e => handleChange(e)}
+                    required
                     />
                     {errors.name && (
                         <p>{errors.name}</p>  //renderiza el texto de error
                     )}
                 </div>
                 <div>
-                    <label>Descripcion</label>
+                    <label>Descripción</label>
                     <input
                     type="text"
                     value={input.description}
                     name="description"
                     onChange={e => handleChange(e)}
+                    required
                     />
                     {errors.description && (
                         <p>{errors.description}</p>
@@ -187,6 +204,7 @@ export default function VideogameCreated(){
                     value={input.released}
                     name="released"
                     onChange={e => handleChange(e)}
+                    required
                     />
                     {errors.released && (
                         <p>{errors.released}</p>
@@ -199,6 +217,7 @@ export default function VideogameCreated(){
                     value={input.rating}
                     name="rating"
                     onChange={e => handleChange(e)}
+                    required
                     />
                     {errors.rating && (
                         <p>{errors.rating}</p>
@@ -211,20 +230,21 @@ export default function VideogameCreated(){
                     value={input.image}
                     name="image"
                     onChange={e => handleChange(e)}
+                    required
                     />
                     {errors.image && (
                         <p>{errors.image}</p>
                     )}
-                </div> {/* falta generos y plataformas */}
+                </div>
                 <select onChange={e => handleGenres(e)}>
-                    <option>Genero del Videojuego a crear</option> {/* COMO HACER PARA QUE NO MARQUE ESTO <<<------------------*/}
+                    <option hidden={true}>Género del Videojuego a crear</option>
                     {genres.map(data => (
                         <option value={data.name}>{data.name}</option>
                     ))}
                 </select>
                 <select onChange={e => handlePlatforms(e)}>
-                    <option>Plataforma del Videojuego a crear</option>
-                    {platforms.map(data => ( /* PENDIENTEEEEEEEEEE <-------------------------- */
+                    <option hidden={true}>Plataforma del Videojuego a crear</option>
+                    {platforms.map(data => (
                         <option value={data}>{data}</option>
                     ))}
                 </select>

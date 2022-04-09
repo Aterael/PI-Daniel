@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { getVideogames, filterCreated, orderByName, orderByRating, filterByGenre, getGenres } from "../actions";
+import { getVideogames, filterCreated, orderByName, orderByRating, filterByGenre, getGenres } from "../../actions";
 import { Link } from "react-router-dom";
-import Card from "./Card"
-import Paginado from "./Paginado";
-import SearchBar from "./SearchBar";
+import Card from "../Card/Card.jsx"
+import Paginado from "../Paginado/Paginado.jsx";
+import SearchBar from "../SearchBar";
+import "./Home.css"
 
 export default function Home (){
 
@@ -79,16 +80,17 @@ export default function Home (){
                 Volver a cargar todos los personajes
             </button>
             <div>
+                <div className="flex_filtros">
                 <select onChange={e => handleSort(e)}>
-                    <option value="asc">Orden alfabetico de A hasta Z</option> {/* el value nos permite acceder y ver que opciones va a ejecutar la logica segun el value dado */}
-                    <option value="desc">Orden alfabetico de Z hasta A</option>
+                    <option value="asc">Orden alfabético  de A hasta Z</option> {/* el value nos permite acceder y ver que opciones va a ejecutar la logica segun el value dado */}
+                    <option value="desc">Orden alfabético  de Z hasta A</option>
                 </select>
                 <select onChange={e => handleRating(e)}>
                     <option value="peor">Rating del Peor al Mejor</option>
                     <option value="mejor">Rating del Mejor al Peor</option>
                 </select>
                 <select onChange={e => handleGenres(e)}>
-                    <option value="">Todos los Generos</option>
+                    <option value="All">Todos los Géneros</option>
                     {genres?.map(data => (
                         <option value={data.name} key={data.id}>{data.name}</option>
                     ))}
@@ -98,26 +100,29 @@ export default function Home (){
                     <option value="created">Videojuegos Creados</option>
                     <option value="api">Videojuegos Existente</option>
                 </select>
+                </div>
                 <Paginado videogamesPerPage={videogamesPerPage} //renderizamos el paginado 
                 allVideogames={allVideogames.length}    //estos serian los params para el componente
                 paginado={paginado} 
                 />
                 <SearchBar/>
+                <div className="card">
                 {
                     currentVideogame?.map(data => {
                         return (
-                            <div>
+                            <div className="cards__item">
                                 <Link to={"/home/" + data.id}>
                                 <Card name={data.name}
                                 image={data.image}
-                                genres={data.genres + " "}
-                                rating={data.rating}
+                                genres={"Géneros: " + data.genres + " "} /* COMO SEPARAR GENEROS */
+                                rating={"Rating: " + data.rating}
                                 key={data.id} />
                                 </Link>
                             </div> 
                         )
                     })
                 }
+                </div>
             </div>
         </div>
     )
