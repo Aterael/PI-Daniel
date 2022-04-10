@@ -1,0 +1,26 @@
+.imagen{
+    width: 1000px;
+    height: 600px;
+    border-radius: 30px;
+}
+
+.container{
+    color: white;
+    background-color: #360029;
+    margin-top: -22px;
+}
+
+.boton{
+  background-color: #b4008a;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-radius: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+
+.boton:hover{
+    background-color: #360029;
+}

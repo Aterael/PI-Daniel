@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { postVideogame, getGenres } from "../actions";
+import { postVideogame, getGenres } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
+import style from "./VideogamesCreated.module.css"
 
 function validate(input){  //usado para validad errores 
     let errors = {};
@@ -19,7 +20,7 @@ function validate(input){  //usado para validad errores
     if (!input.rating){
         errors.rating = "Se requiere una puntuación de Rating";
     } else if (/^[+-]?\d+([,.]\d+)?$/.test(input.rating) === false){
-        errors.rating = "Formato de Rating debe ser 1.2 por ejemplo"
+        errors.rating = "Formato de Rating debe ser como de minimo 0.1 hasta 5"
     }
     if (!input.image){
         errors.image = "Se requiere una imagen";
@@ -165,103 +166,108 @@ export default function VideogameCreated(){
     }
 
     return (
-        <div>
+        <div className={style.div}>
             <Link to="/home">
-                <button>Volver</button>
+                <button className={style.boton}>Volver al Home</button>
             </Link>
-            <h1>Crea tu Videojuego</h1>
-            <form onSubmit={e => handleSubmit(e)}>
+            <h1 className={style.h1}>Crea tu Videojuego</h1>
+            <form className={style.form} onSubmit={e => handleSubmit(e)}>
                 <div>
-                    <label>Nombre</label>
                     <input
+                    className={style.input}
                     type="text"
                     value={input.name}
                     name="name"
                     onChange={e => handleChange(e)}
                     required
+                    placeholder="Introduzca un Nombre"
                     />
                     {errors.name && (
-                        <p>{errors.name}</p>  //renderiza el texto de error
+                        <p className={style.error}>{errors.name}</p>  //renderiza el texto de error
                     )}
                 </div>
                 <div>
-                    <label>Descripción</label>
                     <input
+                    className={style.input}
                     type="text"
                     value={input.description}
                     name="description"
                     onChange={e => handleChange(e)}
                     required
+                    placeholder="Introduzca una Descripción"
                     />
                     {errors.description && (
-                        <p>{errors.description}</p>
+                        <p className={style.error}>{errors.description}</p>
                     )}
                 </div>
                 <div>
-                    <label>Lanzamiento</label>
                     <input
+                    className={style.input}
                     type="text"
                     value={input.released}
                     name="released"
                     onChange={e => handleChange(e)}
                     required
+                    placeholder="Introduzca una Fecha de lanzamiento"
                     />
                     {errors.released && (
-                        <p>{errors.released}</p>
+                        <p className={style.error}>{errors.released}</p>
                     )}
                 </div>
                 <div>
-                    <label>Rating</label>
                     <input
+                    className={style.input}
                     type="text"
                     value={input.rating}
                     name="rating"
                     onChange={e => handleChange(e)}
                     required
+                    placeholder="Introduzca un Rating"
                     />
                     {errors.rating && (
-                        <p>{errors.rating}</p>
+                        <p className={style.error}>{errors.rating}</p>
                     )}
                 </div>
                 <div>
-                    <label>Imagen</label>
                     <input
+                    className={style.input}
                     type="text"
                     value={input.image}
                     name="image"
                     onChange={e => handleChange(e)}
                     required
+                    placeholder="Introduzca una imagen"
                     />
                     {errors.image && (
-                        <p>{errors.image}</p>
+                        <p className={style.error}>{errors.image}</p>
                     )}
                 </div>
-                <select onChange={e => handleGenres(e)}>
+                <select className={style.select1} onChange={e => handleGenres(e)}>
                     <option hidden={true}>Género del Videojuego a crear</option>
                     {genres.map(data => (
                         <option value={data.name}>{data.name}</option>
                     ))}
                 </select>
-                <select onChange={e => handlePlatforms(e)}>
+                <select className={style.select2} onChange={e => handlePlatforms(e)}>
                     <option hidden={true}>Plataforma del Videojuego a crear</option>
                     {platforms.map(data => (
                         <option value={data}>{data}</option>
                     ))}
                 </select>
-                <button type="submit">Crear Videojuego</button>
             </form>
+            <div>
             {input.genres.map(data => (
-                    <div>
-                        <p>{data}</p>
-                        <button onClick={() => handleDeleteGenre(data)}>X</button>
+                <div className={style.divG}>
+                        <button className={style.botonG} onClick={() => handleDeleteGenre(data)}>{data}</button>
                     </div>
                 ))} {/* agarra mis generos y va renderizando cada cosa que selecciono */}
                 {input.platforms.map(data => (
-                    <div>
-                        <p>{data}</p>
-                        <button onClick={() => handleDeletePlatforms(data)}>X</button>
+                    <div className={style.divP}>
+                        <button className={style.botonP} onClick={() => handleDeletePlatforms(data)}>{data}</button>
                     </div>
                 ))}
+                </div>
+                <button className={style.boton} type="submit">Crear Videojuego</button>
         </div>
     )
 }

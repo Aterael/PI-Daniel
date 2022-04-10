@@ -1,7 +1,7 @@
   .container_videogame {
     display: block;
     border-radius: 15px;
-    background: linear-gradient(#04009a, #77acf1);
+    background: linear-gradient(#350236, #710073);
     width: auto;
     height: auto;
     color: #fff;
@@ -9,20 +9,22 @@
     overflow: hidden;
     cursor: default;
     transition: all 400ms ease;
+    text-decoration: none;
+  }
+
+  .text{
+    text-decoration: none;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
 
   .container_videogame:hover {
     box-shadow: 5px 5px 20px rgb(0, 0, 0, 0.4);
     transform: translateY(-3%);
+    text-decoration: none;
   }
 
   .img_videogame {
-    width: 400px;
+    width: 450px;
     height: 350px;
-  
-    /*background: linear-gradient(#77acf1, #04009a);*/
-    /*border: 2px solid black;*/
-    border-radius: 30px 30px 1px 1px;
-    margin-left: 0px;
-    margin-right: 00px;
+    border-radius: 30px 30px 30px 30px;
   }

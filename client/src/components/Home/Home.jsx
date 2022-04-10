@@ -5,8 +5,8 @@ import { getVideogames, filterCreated, orderByName, orderByRating, filterByGenre
 import { Link } from "react-router-dom";
 import Card from "../Card/Card.jsx"
 import Paginado from "../Paginado/Paginado.jsx";
-import SearchBar from "../SearchBar";
-import "./Home.css"
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import style from "./Home.module.css"
 
 export default function Home (){
 
@@ -74,56 +74,63 @@ export default function Home (){
 
     return (
         <div>
-            <Link to="/videogame">Crear Videojuego</Link>
-            <h1>VIDEOGAMES HOME H1</h1>
-            <button onClick={e => {handleClick(e)}}>
+            <div className={style.top_boton}>
+            <button className={style.select} onClick={e => {handleClick(e)}}>
                 Volver a cargar todos los personajes
             </button>
-            <div>
-                <div className="flex_filtros">
-                <select onChange={e => handleSort(e)}>
+            <button className={style.select}>
+                <Link className={style.select} to="/videogame">Crear Videojuego</Link>
+            </button>
+            </div>
+            <div className={style.h1}>
+            <h1>Bienvenido al mayor catálogo de Videojuegos</h1>
+            </div>
+                <div className={style.flex_filtros}>
+                <select className={style.select} onChange={e => handleSort(e)}>
                     <option value="asc">Orden alfabético  de A hasta Z</option> {/* el value nos permite acceder y ver que opciones va a ejecutar la logica segun el value dado */}
                     <option value="desc">Orden alfabético  de Z hasta A</option>
                 </select>
-                <select onChange={e => handleRating(e)}>
+                <select className={style.select} onChange={e => handleRating(e)}>
                     <option value="peor">Rating del Peor al Mejor</option>
                     <option value="mejor">Rating del Mejor al Peor</option>
                 </select>
-                <select onChange={e => handleGenres(e)}>
+                <select className={style.select} onChange={e => handleGenres(e)}>
                     <option value="All">Todos los Géneros</option>
                     {genres?.map(data => (
                         <option value={data.name} key={data.id}>{data.name}</option>
                     ))}
                 </select>
-                <select onChange={e => handleFilterCreated(e)}>
+                <select className={style.select} onChange={e => handleFilterCreated(e)}>
                     <option value="All">Todos los Videojuegos</option>
                     <option value="created">Videojuegos Creados</option>
                     <option value="api">Videojuegos Existente</option>
                 </select>
+                    <SearchBar/>
                 </div>
+                <div className={style.paginado}>
                 <Paginado videogamesPerPage={videogamesPerPage} //renderizamos el paginado 
                 allVideogames={allVideogames.length}    //estos serian los params para el componente
                 paginado={paginado} 
                 />
-                <SearchBar/>
-                <div className="card">
+                </div>
+                <div className={style.card}>
                 {
-                    currentVideogame?.map(data => {
+                    currentVideogame.length !== 0 ? currentVideogame?.map(data => {
                         return (
-                            <div className="cards__item">
-                                <Link to={"/home/" + data.id}>
+                            <div className={style.cards__item}>
+                                <Link className={style.fix_card} to={"/home/" + data.id}>
                                 <Card name={data.name}
                                 image={data.image}
-                                genres={"Géneros: " + data.genres + " "} /* COMO SEPARAR GENEROS */
+                                genres={"Géneros: " + data.genres?.join(", ")}
                                 rating={"Rating: " + data.rating}
                                 key={data.id} />
                                 </Link>
                             </div> 
                         )
-                    })
+                    }) :
+                    <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" />
                 }
                 </div>
-            </div>
         </div>
     )
 }

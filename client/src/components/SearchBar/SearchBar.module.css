@@ -1,0 +1,21 @@
+.input{
+  background-color: #350236;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+}
+
+.boton{
+  background-color: #b4008a;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-radius: 5px;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+}
+
+.boton:hover{
+    background-color: #360029;
+}

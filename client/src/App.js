@@ -2,8 +2,8 @@ import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import LandingPage from "./components/LandingPage/LandingPage.jsx"
 import Home from "./components/Home/Home.jsx"
-import VideogameCreated from './components/VideogamesCreated';
-import Detail from './components/Detail';
+import VideogameCreated from './components/VideogamesCreated/VideogamesCreated.jsx';
+import Detail from './components/Detail/Detail.jsx';
 
 function App() {
   return (

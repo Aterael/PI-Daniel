@@ -1,0 +1,110 @@
+.div{
+    color: white;
+}
+
+.error{
+    color: red;
+}
+
+.boton{
+    background-color: #b4008a;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 25px;
+    font-size: 30px;
+  }
+  
+  .boton:hover{
+      background-color: #360029;
+  }
+
+  .h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    color: white;
+    background-color: #350236;
+    padding: 5px;
+    border-radius: 15px;
+    margin: 10px 500px;
+  }
+
+  .input{
+    background-color: #350236;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 10px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    width: 300px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .select1{
+    background-color: #0e047c;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 15px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 10px;
+  }
+
+  .select2{
+    background-color: #03490d;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 15px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 10px;
+  }
+
+  .form{
+      margin: 20px;
+  }
+
+  .botonG{
+    background-color: #0e047c;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 25px;
+    font-size: 15px;
+  }
+
+  .divG{
+      display: inline-block;
+      margin-left: 5px;
+      margin-right: 5px;
+  }
+
+  .botonG:hover{
+    background-color: #360029;
+}
+
+  .botonP{
+    background-color: #03490d;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 25px;
+    font-size: 15px;
+  }
+
+  .divP{
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+  .botonP:hover{
+    background-color: #360029;
+}

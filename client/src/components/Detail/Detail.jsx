@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../actions";
+import { getDetail } from "../../actions";
+import style from "./Detail.module.css"
 
 export default function Detail(){
 
@@ -19,17 +20,17 @@ export default function Detail(){
 
     if (myVideogame) {
         return (
-          <div>
+          <div className={style.container}>
             <div>
             <h1>{myVideogame.name}</h1>
-                <img src={myVideogame.image} alt="Imagen no encontrada"/>
+                <img className={style.imagen} src={myVideogame.image} alt="Imagen no encontrada"/>
                 <h2>Rating: {myVideogame.rating}</h2>
                 <p dangerouslySetInnerHTML={{__html: myVideogame.description}}></p>
                 <h4>Fecha de lanzamiento: {myVideogame.released}</h4>
-                <h4>Plataformas: {myVideogame.platforms}</h4> {/* COMO SEPARARLOS */}
-                <h4>Géneros: {myVideogame.genres}</h4>  {/* COMO SEPARARLOS */}
+                <h4>Plataformas: {myVideogame.platforms?.join(", ")}</h4>
+                <h4>Géneros: {myVideogame?.genres?.join(", ")}</h4>
               <Link to="/home">
-                <button>Volver</button>
+                <button className={style.boton}>Volver al Home</button>
               </Link>
             </div>
           </div>
@@ -37,7 +38,7 @@ export default function Detail(){
       } else {
         return (
           <div>
-            Cargando...
+            Ups! Algo malo ha pasao, regresa al Home!
             <Link to="/home">
               <button>Volver</button>
             </Link>

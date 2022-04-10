@@ -1,0 +1,19 @@
+.paginado {
+    display:flex;
+  }
+
+.paginado_orden {
+  display: flex;
+  margin: 10px 5px 20px 5px;
+  border-color: black;
+  color: white;
+  border-radius: 5px;
+  border: 10px;
+  padding: 10px;
+  background: #350236;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.paginado_orden:hover{
+        background: #6d036d;
+}
