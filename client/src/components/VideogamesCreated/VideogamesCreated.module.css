@@ -9,17 +9,36 @@
 .boton{
     background-color: #b4008a;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px;
     text-decoration: none;
     color: white;
     margin-top: 25px;
     font-size: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  .botonCrear{
+    background-color: #b4008a;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 15px;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    margin-top: 25px;
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
   
   .boton:hover{
       background-color: #360029;
   }
+
+  .botonCrear:hover{
+    background-color: #360029;
+}
 
   .h1{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -51,6 +70,8 @@
     text-decoration: none;
     color: white;
     margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
   .select2{
@@ -61,6 +82,8 @@
     text-decoration: none;
     color: white;
     margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
   .form{

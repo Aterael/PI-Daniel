@@ -18,7 +18,7 @@ function validate(input){  //usado para validad errores
         errors.released = "Formato de fecha debe ser DD/MM/AAAA"
     }
     if (!input.rating){
-        errors.rating = "Se requiere una puntuación de Rating";
+        errors.rating = "Se requiere una puntuación de Rating. El Rating debe ser desde 0.1 hasta 5 puntos";
     } else if (/^[+-]?\d+([,.]\d+)?$/.test(input.rating) === false){
         errors.rating = "Formato de Rating debe ser como de minimo 0.1 hasta 5"
     }
@@ -254,7 +254,8 @@ export default function VideogameCreated(){
                         <option value={data}>{data}</option>
                     ))}
                 </select>
-            </form>
+                <button className={style.botonCrear} type="submit">Crear Videojuego</button>
+                </form>
             <div>
             {input.genres.map(data => (
                 <div className={style.divG}>
@@ -267,7 +268,6 @@ export default function VideogameCreated(){
                     </div>
                 ))}
                 </div>
-                <button className={style.boton} type="submit">Crear Videojuego</button>
         </div>
     )
 }
