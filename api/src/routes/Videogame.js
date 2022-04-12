@@ -8,14 +8,9 @@ const {
     Videogame
 } = require("../db")
 
-
 const router = Router();
 
 const axios = require('axios');
-
-const {
-    getAllVideogames
-} = require("../Controllers/VideogamesController");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -30,17 +25,17 @@ router.get("/:id", async (req, res) => {
 
         let {
             id
-        } = req.params;
+        } = req.params; //traigo el id por parametro
 
         if (id.length > 6) {
-            let videogameDb = await Videogame.findOne({
+            let videogameDb = await Videogame.findOne({ //si el id tiene un largo mayor a 6 viene de la base de datos, se trae el juego y el genero respectivo
                 where: {
                     id: id
                 },
                 include: Genre
             })
 
-            let game = {
+            let game = {   //creo el formato del juego que necesito para luego darlo por respuesta
                 id: videogameDb.id,
                 name: videogameDb.name,
                 description: videogameDb.description,
@@ -54,7 +49,7 @@ router.get("/:id", async (req, res) => {
             res.send(game)
         } else {
 
-            let gameApi = await axios.get(`https://api.rawg.io/api/games/${id}?key=${DB_KEY}`);
+            let gameApi = await axios.get(`https://api.rawg.io/api/games/${id}?key=${DB_KEY}`);  //me traigo de la api el juego por id
 
             let gameFromApi = {
                 id: gameApi.data.id,
@@ -92,7 +87,7 @@ router.post("/", async (req, res) => {
             image
         } = req.body //se busca la info que necesitaremos para crear en el body
 
-        let videogameCreated = await Videogame.create({ //aca creamos el videojuego con lo que nos pasaron por body
+        let videogameCreated = await Videogame.create({ //aca creamos el videojuego en la tabla con lo que nos pasaron por body
             id,
             name,
             description,

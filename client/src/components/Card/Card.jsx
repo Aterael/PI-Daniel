@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Card.module.css"
 
-export default function Card({name, image, genres, rating}){
+export default function Card({name, image, genres, rating}){ //los parametros son los que quiero que aparezcan en la card
     return (
         <div className={style.container_videogame}>
             <h3 className={style.text}>{name}</h3>

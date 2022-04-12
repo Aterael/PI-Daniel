@@ -1,4 +1,4 @@
-const initialState = {
+const initialState = { //estados iniciales
     videogames: [],
     allVideogames: [],
     genres: [],
@@ -7,20 +7,20 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case "GET_VIDEOGAMES":
+        case "GET_VIDEOGAMES": //caso de obtener todos los videojuegos, ademas de mantener lo que teniamos en el estado, añadimos los videojuegos
             return {
                 ...state,
                 videogames: action.payload,
-                    allVideogames: action.payload
+                    allVideogames: action.payload //copia de todos los juegos para no pisar el estado original
             }
-            case "FILTER_CREATED":
+            case "FILTER_CREATED": //ordenar por creados o existentes
                 let createdFilter;
                 if (action.payload === "api") {
-                    let apiGame = state.allVideogames.filter(data => data.id.toString().length < 7)
+                    let apiGame = state.allVideogames.filter(data => data.id.toString().length < 7) //toString para poder usar el .length
                     createdFilter = apiGame
                 }
                 if (action.payload === "created") {
-                    let createdGame = state.allVideogames.filter(data => data.id.toString().length > 7)
+                    let createdGame = state.allVideogames.filter(data => data.id.toString().length > 6)
                     createdFilter = createdGame
                 }
                 if (action.payload === "All") {
@@ -31,7 +31,7 @@ function rootReducer(state = initialState, action) {
                     ...state,
                     videogames: createdFilter
                 }
-                case "ORDER_BY_NAME":
+                case "ORDER_BY_NAME": //ordenar por alfabetico
                     let sortedArr = action.payload === "asc" ? state.videogames.sort(function (a, b) { //si es ascendente
                             if (a.name > b.name) { // accede al estado videogames y le hace un sort
                                 return 1; // los ordena de manera ascendente
@@ -41,7 +41,7 @@ function rootReducer(state = initialState, action) {
                             }
                             return 0
                         }) :
-                        state.videogames.sort(function (a, b) {
+                        state.videogames.sort(function (a, b) { //sort ordena por unicode, las letras tienen un valor asignado
                             if (a.name > b.name) {
                                 return -1
                             }
@@ -54,23 +54,23 @@ function rootReducer(state = initialState, action) {
                         ...state,
                         videogames: sortedArr
                     }
-                    case "GET_NAME_VIDEOGAMES":
+                    case "GET_NAME_VIDEOGAMES": //obtener videojuego por nombre
                         return {
                             ...state,
                             videogames: action.payload
                         }
-                        case "POST_VIDEOGAME":
+                        case "POST_VIDEOGAME": //crear videojuego
                             return {
                                 ...state
                             }
-                            case "GET_GENRES":
+                            case "GET_GENRES": //obtener generos
                                 return {
                                     ...state,
                                     genres: action.payload
                                 }
-                                case "FILTER_BY_GENRE":
-                                    let filterGenre = state.allVideogames.filter(p => {
-                                        if(p.genres?.includes(action.payload)) return p
+                                case "FILTER_BY_GENRE": //filtrar por genero
+                                    let filterGenre = state.allVideogames.filter(p => { //filtro los videojuegos buscando coincidencia
+                                        if(p.genres?.includes(action.payload)) return p  //si el genero es el mismo al del payload me lo trae
                                     })
                                     if(action.payload === "All"){
                                         filterGenre = state.allVideogames
@@ -79,7 +79,7 @@ function rootReducer(state = initialState, action) {
                                         ...state,
                                         videogames: filterGenre
                                     }
-                                    case "ORDER_BY_RATING":
+                                    case "ORDER_BY_RATING": //ordenar por rating
                                         let sortedArrRating;
                                         if(action.payload === "peor"){
                                             sortedArrRating = state.videogames.sort(function (a, b) { //si es ascendente
@@ -106,7 +106,7 @@ function rootReducer(state = initialState, action) {
                                             ...state,
                                             videogames: sortedArrRating
                                         }
-                                        case "GET_DETAIL":
+                                        case "GET_DETAIL": //obtener detalle (id)
                                             return {
                                                 ...state,
                                                 detail: action.payload

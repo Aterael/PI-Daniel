@@ -4,7 +4,7 @@ import axios from "axios";
 
 export function getVideogames() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/videogames"); //nos traemos la info de la api para luego usarla en el reducer
+        let json = await axios.get("http://localhost:3001/videogames"); //nos traemos los juegos
         return dispatch({
             type: "GET_VIDEOGAMES",
             payload: json.data
@@ -36,7 +36,7 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 export function getNameVideogames(payload) { //obtener videojuegos por nombre
     return async function (dispatch) {
         try {
-            let json = await axios.get("http://localhost:3001/videogames?name=" + payload);
+            let json = await axios.get("http://localhost:3001/videogames?name=" + payload); //el payload viene siendo el nombre del juego
             return dispatch({
                 type: "GET_NAME_VIDEOGAMES",
                 payload: json.data

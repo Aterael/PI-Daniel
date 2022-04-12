@@ -28,11 +28,11 @@ export default function Home (){
 
     //-------------------------------------------------------------------
 
-    const [orden, setOrden] = useState("");
+    const [orden, setOrden] = useState(""); //creo el estado de orden para poder renderizar
 
-    const genres = useSelector((state) => state.genres);
+    const genres = useSelector((state) => state.genres); //me traigo el estado de generos
 
-    const paginado = (pageNumber) => { 
+    const paginado = (pageNumber) => { //creo la funcion paginado, segun el numero de pagina que le pasen setea el estado de la pagina actual y hace que cambien los indices y asi muestra distintos juegos
         setCurrentPage(pageNumber)
     }
 
@@ -41,31 +41,31 @@ export default function Home (){
         dispatch(getVideogames()); //esto es lo mismo que usar mapDispatchToProps
     }, [dispatch])
 
-    function handleClick(e){
+    function handleClick(e){ //funcion para volver a cargar todos los personajes
         e.preventDefault();
         dispatch(getVideogames());
     }
 
-    function handleFilterCreated(e){
+    function handleFilterCreated(e){ //funcion para filtrar por videojuegos creados o existentes
         e.preventDefault();
         dispatch(filterCreated(e.target.value));
     }
 
-    function handleSort(e){
+    function handleSort(e){ //funcion para filtrar por orden alfabetico
         e.preventDefault();
         dispatch(orderByName(e.target.value));
         setCurrentPage(1); //al ordenar seteo para que comience en la primera pagina
         setOrden(e.target.value) //se usa para que haga la modificacion, la setee y renderice 
     }
 
-    function handleRating(e){
+    function handleRating(e){ //funcion para ordenar por rating
         e.preventDefault();
         dispatch(orderByRating(e.target.value));
         setCurrentPage(1);
         setOrden(e.target.value)
     }
 
-    function handleGenres(e){
+    function handleGenres(e){ //funcion para ordenar por genero
         e.preventDefault();
         dispatch(filterByGenre(e.target.value));
         setCurrentPage(1);
@@ -117,7 +117,7 @@ export default function Home (){
                 {
                     currentVideogame.length !== 0 ? currentVideogame?.map(data => {
                         return (
-                            <div className={style.cards__item}>
+                            <div className={style.cards_item}>
                                 <Link className={style.fix_card} to={"/home/" + data.id}>
                                 <Card name={data.name}
                                 image={data.image}
@@ -128,7 +128,7 @@ export default function Home (){
                             </div> 
                         )
                     }) :
-                    <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" />
+                    <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" alt="not found" />
                 }
                 </div>
         </div>

@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./VideogamesCreated.module.css"
 
 function validate(input){  //usado para validad errores 
+
     let errors = {};
+
     if (!input.name){
         errors.name = "Se requiere un nombre"
     }
@@ -106,12 +108,12 @@ export default function VideogameCreated(){
         dispatch(getGenres());
     }, [dispatch]);
 
-    function handleChange(e){
+    function handleChange(e){ //funcion para modificar el input segun lo que se escriba
         setInput({
             ...input,
             [e.target.name]: e.target.value //ademas de lo que tiene agrega el target.value de lo que esta modificando segun el target.name
         });
-        setErrors(validate({ //tambien setea el estado de error usando la funcion creada arriba
+        setErrors(validate({ //tambien setea el estado de error usando la funcion creada arriba, usamos el validate para ver si cumplimos o no con los requisitos
             ...input,
             [e.target.name]: e.target.value
         }));
@@ -120,7 +122,7 @@ export default function VideogameCreated(){
     function handleGenres(e){
         setInput({
             ...input,
-            genres: [...input.genres, e.target.value] //cuando le mando un genero, me trae lo que ya habia y me concatena el nuevo genero a agregar
+            genres: [...input.genres, e.target.value] //cuando le mando un genero, me trae lo que ya habia y me concatena el nuevo genero a agregar al input
         })
     }
 
@@ -137,9 +139,9 @@ export default function VideogameCreated(){
             e.preventDefault();
             alert("Falta una propiedad para crear tu Videojuego!")
         } else {
-            dispatch(postVideogame(input));
+            dispatch(postVideogame(input)); //despacho al store la creacion del videojuego con lo que el usuario dio por input
             alert("Videojuego creado con éxito!");
-            setInput({
+            setInput({  //limpio el input luego de creado
                 name: "",
             description: "",
             released:"",
@@ -151,10 +153,10 @@ export default function VideogameCreated(){
         }
     }
 
-    function handleDeletePlatforms(e){
+    function handleDeletePlatforms(e){ //funcion para eliminar plataformas que no queremos crear
         setInput({
             ...input,
-            platforms: input.platforms.filter(data => data !==e)
+            platforms: input.platforms.filter(data => data !==e) //filtro las plataformas por todo lo que no sea el elemento a eliminar
         })
     }
 
@@ -183,7 +185,7 @@ export default function VideogameCreated(){
                     placeholder="Introduzca un Nombre"
                     />
                     {errors.name && (
-                        <p className={style.error}>{errors.name}</p>  //renderiza el texto de error
+                        <p className={style.error}>{errors.name}</p>  //si un error existe renderiza el texto de error
                     )}
                 </div>
                 <div>
@@ -257,7 +259,7 @@ export default function VideogameCreated(){
                 <button className={style.botonCrear} type="submit">Crear Videojuego</button>
                 </form>
             <div>
-            {input.genres.map(data => (
+            {input.genres.map(data => ( //renderiza cada genero que se vaya añadiendo al input como un boton
                 <div className={style.divG}>
                         <button className={style.botonG} onClick={() => handleDeleteGenre(data)}>{data}</button>
                     </div>

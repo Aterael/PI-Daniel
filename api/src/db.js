@@ -7,8 +7,7 @@ const path = require('path');
 const {
   DB_USER,
   DB_PASSWORD,
-  DB_HOST,
-  DB_KEY
+  DB_HOST
 } = process.env;
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/videogames`, {

@@ -27,7 +27,7 @@ const getApiInfo = async function () {
             })
         });
 
-        let apiInfo = fullApiUrl.map(data => {
+        let apiInfo = fullApiUrl.map(data => { //creo una variable donde voy a guardar solo los datos que necesito
             return {
                 id: data.id,
                 name: data.name,
@@ -51,7 +51,7 @@ const getApiInfo = async function () {
 const getDbInfo = async function () { //busca en la base de datos cualquier info que incluya el modelo genero y su atributo name y que sea un array
 
     try {
-        let gameDb = await Videogame.findAll({
+        let gameDb = await Videogame.findAll({ //en una variable guardo la pedida a la DB de los juegos que incluyan el modelo genero
             include: {
                 model: Genre,
                 attributes: ["name"],
@@ -61,7 +61,7 @@ const getDbInfo = async function () { //busca en la base de datos cualquier info
             }
         })
 
-        gameDb = gameDb.map(({
+        gameDb = gameDb.map(({ //retorno los datos necesarios para los juegos de la DB
             id,
             name,
             released,
@@ -91,7 +91,7 @@ const getAllVideogames = async function () {
     try {
         let apiInfo = await getApiInfo();
         let dbInfo = await getDbInfo();
-        let infoTotal = dbInfo.concat(apiInfo);
+        let infoTotal = dbInfo.concat(apiInfo); //concateno la api con la DB
         return infoTotal;
     } catch (error) {
         console - log(error)

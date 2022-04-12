@@ -6,15 +6,15 @@ import style from "./Detail.module.css"
 
 export default function Detail(){
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); //se usa para despachar acciones al store
 
-    const {id} = useParams();
+    const {id} = useParams(); //uso el parametro del id
 
-    useEffect(() => {
+    useEffect(() => { //se manda la accion al store para hacer la logica
         dispatch(getDetail(id)); //de esta forma accedo al ID
     }, [dispatch,id]);
 
-    const myVideogame = useSelector(state => state.detail);
+    const myVideogame = useSelector(state => state.detail); //uso el estado del reducer
 
     console.log(myVideogame)
 

@@ -15,7 +15,7 @@ body {
   margin-bottom: 10px;
 }
 
-a:-webkit-any-link {
+a:-webkit-any-link {   /* accedi por consola a este css para modificar el color de un boton */
   color:rgb(255, 255, 255);
   cursor: pointer;
 }
@@ -51,7 +51,7 @@ a:-webkit-any-link {
   color: white;
 }
 
-.cards__item {
+.cards_item {
   flex-basis: 30%;
   padding-left: 8px;
   padding-right: 8px;
